@@ -1,17 +1,17 @@
 # importing random library
 import random
 
-# # choose difficulty
-# difficulty = input("Enter your game difficult (easy, hard): ")
+# choose difficulty
+difficulty = input("Enter your game difficult (easy, hard): ")
 
 # guess letter
 new_guess = input("Enter your guess (one letter): ")
 
 
 
-def pick_word_easy(filename):
+def pick_word_easy():
     # open file
-    with open(filename) as file:
+    with open("words.txt") as file:
         text = file.read()
     # lowercase text
     text = text.lower()
@@ -29,6 +29,8 @@ def pick_word_easy(filename):
     print(target)
     return target
 
+target = pick_word_easy()
+
 # display blanks
 print(" _ " * len(target))
 
@@ -42,13 +44,33 @@ past_guess = []
 for turn in range(8):
     print("Turn", turn + 1)
     new_guess = input("Enter your guess (one letter): ")
+    # already guessed list
+    past_guess = []
+    # checking if letter already guessed
     for past in past_guess:
         if past == new_guess:
             print("Letter already guessed")
         else:
             past_guess.append(new_guess)
     
+# from class notes
+def display_letter(letter, guesses):
+    """
+    Conditionally display a letter. If the letter is already in
+    the list `guesses`, then return it. Otherwise, return "_".
+    """
+    if letter in guesses:
+        return letter
+    else:
+        return "_"
 
+[display_letter(letter, current_guesses) for letter in word]
+
+def print_word(word, guesses):
+    output_letters = [display_letter(letter, guesses) for letter in word]
+    print(" ".join(output_letters))
+    
+print_word(word, guesses)
 # random shit - may not be necessary
 # if __name__ == "__main__":
 #     import argparse
