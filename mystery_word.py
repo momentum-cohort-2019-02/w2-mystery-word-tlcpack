@@ -6,6 +6,8 @@ difficulty = input("Enter your game difficult (easy, hard): ")
 
 # guess letter
 
+current_guesses = []
+
 def letter_guess():
     new_guess = input("Enter your guess (one letter): ")
     # is 1 letter
@@ -16,6 +18,7 @@ def letter_guess():
     # check if guess is a letter?
     all_letters = "abcdefghijklmnopqrstuvwxyz"
     all_letters += all_letters.upper()
+
     # checking if letter already guessed
     for letter in all_letters:
         if new_guess not in all_letters:
@@ -61,16 +64,19 @@ def letter_guess():
 
 # find random word - works
 def pick_word():
+    """Asking user for difficulty, creating word list based on response"""
     # open file
     # choose difficulty
     difficulty = input("Enter your game difficult (easy, normal, hard): ")
     with open("words.txt") as file:
         text = file.read()
+        file.close
+    # # # does with auto-close file?
     # lowercase text
     text = text.lower()
     # replace new lines with spaces
     text = text.replace("\n", " ")
-
+    difficulty = difficulty.lower()
     # put words in list, may need to use \n instead of .split(), pulling words of correct length
     words = []
     if difficulty == "easy":
@@ -81,17 +87,22 @@ def pick_word():
         for word in text.split(" "):
             if len(word) > 5 and len(word) < 9:
                 words.append(word)
-    else: 
+    elif difficulty == "hard":
         for word in text.split(" "):
-            if len(word) > 7:
+            if len(word) > 7 :
                 words.append(word)
+    # make response for invalid response
+    else: 
+        print("Invalid response")
+        pick_word()
     # pick random word for game
     target_word = random.choice(words)
     print("The word is ", len(target_word), "letters long.")
     print(target_word)
     return target_word
 
-target_word = pick_word()
+final_target_word = pick_word()
+# final_target_word = final_target_word.lower()
 
 # display blanks - works
 blanks = (" _ " * len(target_word))
@@ -122,7 +133,7 @@ def display_letter(letter, guesses):
 def print_word(word, guesses):
     output_letters = [display_letter(letter, guesses) for letter in word]
     print(" ".join(output_letters))
-
+    # need return?
 
 # game has turns - works
 def run_game():
@@ -130,12 +141,13 @@ def run_game():
     display = display_letter(word, current_guesses)
     print(display)
     bad_guesses = 0
+    # can also use for loop to compare guessed letters to word letters
     while "_" in display:
         print("Turn: ", bad_guesses + 1)
         new_guess = input("Enter your guess (one letter): ")
         bad_guesses += 1
         if bad_guesses == 8:
-            print("Game Over")
+            print(f"Game Over. The word is {final_target_word}.")
             play_again()
             break
 
@@ -147,7 +159,7 @@ def play_again():
     else:
         print("OK Goodbye! Thanks for playing!")
 
-# random shit - may not be necessary
+# random shit - may not be necessary - maybe for running text file
 # if __name__ == "__main__":
 #     import argparse
 #     from pathlib import Path
@@ -163,3 +175,13 @@ def play_again():
 #     else:
 #         print(f"{file} does not exist!")
 #         exit(1)
+
+# word = 
+# guesses = []
+# for letter in word:
+#     if letter not in guesses:
+#         win = False
+# all function can help with this
+# all([letter in guesses for letter in word])
+
+# if difficulty in ['easy', 'medium', 'hard']:
