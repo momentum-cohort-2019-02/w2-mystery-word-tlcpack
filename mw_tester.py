@@ -58,7 +58,6 @@ def display_letter(letter, guesses):
         return "_"
 
 
-
 def print_word(word, guesses):
     output_letters = [display_letter(letter, guesses) for letter in final_target_word]
     print(" ".join(output_letters))
