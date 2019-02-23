@@ -9,6 +9,7 @@ difficulty = input("Enter your game difficult (easy, hard): ")
 current_guesses = []
 
 def letter_guess():
+    """Asks user for letter, validates guess, returns if valid"""
     new_guess = input("Enter your guess (one letter): ")
     # is 1 letter
     if len(new_guess) > 1:
@@ -33,34 +34,7 @@ def letter_guess():
         current_guesses.append(new_guess)
     return new_guess
 
-# testing letter_guess
-# past_guess = []
-# def letter_guess():
-#     new_guess = input("Enter your guess (one letter): ")
-#     # is 1 letter
-#     if len(new_guess) > 1:
-#         print("That is too many letters")
-#         letter_guess()
-        
-#     # already guessed list
-#     # past_guess = []
-#     # check if guess is a letter?
-#     all_letters = "abcdefghijklmnopqrstuvwxyz"
-#     all_letters += all_letters.upper()
-#     # checking if letter already guessed
-#     for letter in all_letters:
-#         if new_guess not in all_letters:
-#             print("This isn't a letter")
-#             letter_guess()
-#             break
-#     for past in past_guess:
-#         if new_guess in past_guess:
-#             print("Letter already guessed")
-#             letter_guess()
-            
-#         else:
-#             past_guess.append(new_guess)
-#             return new_guess
+
 
 # find random word - works
 def pick_word():
@@ -133,26 +107,28 @@ def display_letter(letter, guesses):
 def print_word(word, guesses):
     output_letters = [display_letter(letter, guesses) for letter in word]
     print(" ".join(output_letters))
-    # need return?
+    return
 
 # game has turns - works
 def run_game():
     
-    display = display_letter(word, current_guesses)
+    display = display_letter(final_target_word, current_guesses)
     print(display)
     bad_guesses = 0
     # can also use for loop to compare guessed letters to word letters
     while "_" in display:
         print("Turn: ", bad_guesses + 1)
-        new_guess = input("Enter your guess (one letter): ")
+        letter_guess()
         bad_guesses += 1
         if bad_guesses == 8:
             print(f"Game Over. The word is {final_target_word}.")
+            # f string works
             play_again()
             break
 
 # play again? - works
 def play_again():
+    """Asks user if they would like to replay game"""
     response = input("Play again? (Y/N): ")
     if response == "Y" or response == "y":
         run_game()
@@ -175,6 +151,35 @@ def play_again():
 #     else:
 #         print(f"{file} does not exist!")
 #         exit(1)
+
+# testing letter_guess
+# past_guess = []
+# def letter_guess():
+#     new_guess = input("Enter your guess (one letter): ")
+#     # is 1 letter
+#     if len(new_guess) > 1:
+#         print("That is too many letters")
+#         letter_guess()
+        
+#     # already guessed list
+#     # past_guess = []
+#     # check if guess is a letter?
+#     all_letters = "abcdefghijklmnopqrstuvwxyz"
+#     all_letters += all_letters.upper()
+#     # checking if letter already guessed
+#     for letter in all_letters:
+#         if new_guess not in all_letters:
+#             print("This isn't a letter")
+#             letter_guess()
+#             break
+#     for past in past_guess:
+#         if new_guess in past_guess:
+#             print("Letter already guessed")
+#             letter_guess()
+            
+#         else:
+#             past_guess.append(new_guess)
+#             return new_guess
 
 # word = 
 # guesses = []
