@@ -120,10 +120,12 @@ def run_game():
         #printint target word as a check
         print_word(final_target_word, current_guesses)
 
-        # trying to declare winner #
+        # declaring winner
+        # adding correctly guessed letter to a good guess list
         for letter in final_target_word:
             if letter in current_guesses and letter not in winner_check:
                 winner_check.append(letter)
+        # comparing len of unique letter lists between word and good guesses
         if len(unique_letters_in_final) == len(winner_check):
                 print("You win!")
                 play_again()
