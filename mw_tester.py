@@ -94,8 +94,6 @@ def letter_guess():
 def run_game():
     
     print_word(final_target_word, current_guesses)
-    # blanks = (" _ " * len(final_target_word))
-    # print(blanks)
     bad_guesses = 0
     # can also use for loop to compare guessed letters to word letters
     while True:
