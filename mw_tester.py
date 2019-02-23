@@ -1,6 +1,6 @@
 import random
 
-current_guesses = []
+
 
 def pick_word():
     """Asking user for difficulty, creating word list based on response"""
@@ -74,9 +74,7 @@ def print_word(word, guesses):
 def letter_guess():
     """Asks user for letter, validates guess, returns if valid"""
     new_guess = input("Enter your guess (one letter): ")
-    # confirming correct length
-    if len(new_guess) > 1:
-        print("That is too many letters")
+   
     ### something is still off here ###
     # check if guess is a letter?
     all_letters = "abcdefghijklmnopqrstuvwxyz"
@@ -86,12 +84,14 @@ def letter_guess():
     for letter in all_letters:
         if new_guess not in all_letters:
             print("This isn't a letter")
-            letter_guess()
             break
     
     if new_guess in current_guesses:
         print("Letter already guessed")
-        letter_guess()
+        break
+    elif len(new_guess) > 1:
+        print("That is too many letters")
+        break
     else:
         current_guesses.append(new_guess)
     return new_guess
@@ -103,6 +103,7 @@ def run_game():
     print("# unique letter", len(unique_letters_in_final))
     bad_guesses = 0
     winner_check = []
+    current_guesses = []
     # can also use for loop to compare guessed letters to word letters
     # for guess in current_guesses:
     while True:

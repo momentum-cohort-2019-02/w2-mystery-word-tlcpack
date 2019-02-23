@@ -1,42 +1,8 @@
 # importing random library
 import random
 
-# choose difficulty
-difficulty = input("Enter your game difficult (easy, hard): ")
-
-# guess letter
-
-current_guesses = []
-
-def letter_guess():
-    """Asks user for letter, validates guess, returns if valid"""
-    new_guess = input("Enter your guess (one letter): ")
-    # is 1 letter
-    if len(new_guess) > 1:
-        print("That is too many letters")
-        letter_guess()
-        
-    # check if guess is a letter?
-    all_letters = "abcdefghijklmnopqrstuvwxyz"
-    all_letters += all_letters.upper()
-
-    # checking if letter already guessed
-    for letter in all_letters:
-        if new_guess not in all_letters:
-            print("This isn't a letter")
-            letter_guess()
-            break
-    
-    if new_guess in current_guesses:
-        print("Letter already guessed")
-        letter_guess()
-    else:
-        current_guesses.append(new_guess)
-    return new_guess
 
 
-
-# find random word - works
 def pick_word():
     """Asking user for difficulty, creating word list based on response"""
     # open file
@@ -45,12 +11,15 @@ def pick_word():
     with open("words.txt") as file:
         text = file.read()
         file.close
+
     # # # does with auto-close file?
     # lowercase text
     text = text.lower()
+
     # replace new lines with spaces
     text = text.replace("\n", " ")
     difficulty = difficulty.lower()
+
     # put words in list, may need to use \n instead of .split(), pulling words of correct length
     words = []
     if difficulty == "easy":
@@ -65,10 +34,12 @@ def pick_word():
         for word in text.split(" "):
             if len(word) > 7 :
                 words.append(word)
+    
     # make response for invalid response
     else: 
         print("Invalid response")
         pick_word()
+    
     # pick random word for game
     target_word = random.choice(words)
     print("The word is ", len(target_word), "letters long.")
@@ -76,22 +47,13 @@ def pick_word():
     return target_word
 
 final_target_word = pick_word()
-# final_target_word = final_target_word.lower()
+# find unique letters in final word
+all_letters = "abcdefghijklmnopqrstuvwxyz"
+unique_letters_in_final = []
+for letter in final_target_word:
+    if letter in all_letters and letter not in unique_letters_in_final:
+        unique_letters_in_final.append(letter)
 
-# display blanks - works
-blanks = (" _ " * len(target_word))
-print(blanks)
-
-
-
-# already guessed list
-past_guess = []
-
-
-    
-
-    
-# from class notes - works
 def display_letter(letter, guesses):
     """
     Conditionally display a letter. If the letter is already in
@@ -103,30 +65,88 @@ def display_letter(letter, guesses):
         return "_"
 
 
-
 def print_word(word, guesses):
-    output_letters = [display_letter(letter, guesses) for letter in word]
+    output_letters = [display_letter(letter, guesses) for letter in final_target_word]
     print(" ".join(output_letters))
     return
 
-# game has turns - works
+
+
+def letter_guess():
+    """Asks user for letter, validates guess, returns if valid"""
+    new_guess = input("Enter your guess (one letter): ")
+   
+    ### something is still off here ###
+    # check if guess is a letter?
+    all_letters = "abcdefghijklmnopqrstuvwxyz"
+    all_letters += all_letters.upper()
+
+    # checking if letter already guessed
+    for letter in all_letters:
+        if new_guess not in all_letters:
+            print("This isn't a letter")
+            break
+    
+    if new_guess in current_guesses:
+        print("Letter already guessed")
+        break
+    elif len(new_guess) > 1:
+        print("That is too many letters")
+        break
+    else:
+        current_guesses.append(new_guess)
+    return new_guess
+
 def run_game():
     
-    display = display_letter(final_target_word, current_guesses)
-    print(display)
+    print_word(final_target_word, current_guesses)
+    print(unique_letters_in_final)
+    print("# unique letter", len(unique_letters_in_final))
     bad_guesses = 0
+    winner_check = []
+    current_guesses = []
     # can also use for loop to compare guessed letters to word letters
-    while "_" in display:
+    # for guess in current_guesses:
+    while True:
+        
+        #showing turn
         print("Turn: ", bad_guesses + 1)
-        letter_guess()
-        bad_guesses += 1
-        if bad_guesses == 8:
+        
+        #showing current guesses
+        print(''.join(current_guesses))
+        print(winner_check)
+
+        #running guess letter fxn
+        recent = letter_guess()
+        
+        #printint target word as a check
+        print_word(final_target_word, current_guesses)
+
+        # declaring winner
+        # adding correctly guessed letter to a good guess list
+        for letter in final_target_word:
+            if letter in current_guesses and letter not in winner_check:
+                winner_check.append(letter)
+        # comparing len of unique letter lists between word and good guesses
+        if len(unique_letters_in_final) == len(winner_check):
+                print("You win!")
+                play_again()
+                return  
+        if recent in final_target_word:
+            print("Good guess!")
+        else:
+            print("Not quite")
+            bad_guesses += 1
+        
+        
+        
+        #ending game with too many guesses
+        if bad_guesses == 5:
             print(f"Game Over. The word is {final_target_word}.")
-            # f string works
             play_again()
             break
 
-# play again? - works
+
 def play_again():
     """Asks user if they would like to replay game"""
     response = input("Play again? (Y/N): ")
@@ -134,6 +154,9 @@ def play_again():
         run_game()
     else:
         print("OK Goodbye! Thanks for playing!")
+        return
+
+run_game()
 
 # random shit - may not be necessary - maybe for running text file
 # if __name__ == "__main__":
