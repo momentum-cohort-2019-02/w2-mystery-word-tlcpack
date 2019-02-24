@@ -166,7 +166,7 @@ def run_game():
 def play_again():
     """Asks user if they would like to replay game"""
     response = input("Play again? (Y/N): ")
-    if response == "Y" or response == "y":
+    if response.lower() == "y" or response == "yes":
         run_game()
     else:
         print("OK Goodbye! Thanks for playing!")
