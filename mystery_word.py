@@ -74,28 +74,29 @@ def display_letter(letter, guesses):
 
 def letter_guess():
     """Asks user for letter, validates guess, returns if valid"""
-    new_guess = input("Enter your guess (one letter): ")
-   
-    ### something is still off here ###
-    # check if guess is a letter?
+    
+    # check if guess is a letter
     all_letters = "abcdefghijklmnopqrstuvwxyz"
     all_letters += all_letters.upper()
 
     # checking if entry is valid already guessed
     
-    
-    if new_guess in current_guesses:
-        print("Letter already guessed")
-        
-    elif len(new_guess) > 1:
-        print("That is too many letters")
-    
-    elif new_guess not in all_letters:
-        print("This isn't a letter")    
-    
-    else:
-        current_guesses.append(new_guess)
-    return new_guess
+    while True:
+        new_guess = input("Enter your guess (one letter): ")
+        new_guess = new_guess.lower()
+        if new_guess in current_guesses:
+            print("Letter already guessed")
+            
+        elif len(new_guess) != 1:
+            print("I need one letter")
+            
+        elif new_guess not in all_letters:
+            print("This isn't a letter")    
+            
+        else:
+            current_guesses.append(new_guess)
+            return new_guess
+
 
 def run_game():
     """The game"""
@@ -127,7 +128,7 @@ def run_game():
         #showing turn
         print("Turn: ", bad_guesses + 1)
         
-        #showing current guesses for testing
+        #showing current guesses # for testing
         print(''.join(current_guesses))
         print(winner_check)
 
@@ -147,22 +148,13 @@ def run_game():
             print("You win!")
             play_again()
             return  
+        
         if recent in final_target_word:
             print("Good guess!")
-        #keeps getting hung up on "Letter already guessed"
+            # current_guesses.append(recent)
         else:
-            if len(recent) != 1:
-                print("That is too many letters")
-            elif recent in current_guesses:
-                print("Letter already guessed")
-
-            elif recent not in all_letters:
-                print("This isn't a letter")
-            else: 
-                print("Not quite")
-                bad_guesses += 1
-        
-        
+            print("Not quite")
+            bad_guesses += 1
         
         #ending game with too many guesses
         if bad_guesses == 5:

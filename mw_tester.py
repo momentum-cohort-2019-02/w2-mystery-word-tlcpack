@@ -64,8 +64,6 @@ def display_letter(letter, guesses):
 
 def letter_guess():
     """Asks user for letter, validates guess, returns if valid"""
-    new_guess = input("Enter your guess (one letter): ")
-   
     
     # check if guess is a letter
     all_letters = "abcdefghijklmnopqrstuvwxyz"
@@ -73,19 +71,21 @@ def letter_guess():
 
     # checking if entry is valid already guessed
     
-    # while True:
-    #     if new_guess in current_guesses:
-    #         print("Letter already guessed")
-    #         letter_guess()
-    #     elif len(new_guess) > 1:
-    #         print("That is too many letters")
-    #         letter_guess()
-    #     elif new_guess not in all_letters:
-    #         print("This isn't a letter")    
-    #         letter_guess()
-    #     else:
-    #         current_guesses.append(new_guess)
-    return new_guess
+    while True:
+        new_guess = input("Enter your guess (one letter): ")
+        new_guess = new_guess.lower()
+        if new_guess in current_guesses:
+            print("Letter already guessed")
+            
+        elif len(new_guess) != 1:
+            print("I need one letter")
+            
+        elif new_guess not in all_letters:
+            print("This isn't a letter")    
+            
+        else:
+            current_guesses.append(new_guess)
+            return new_guess
 
 
 
@@ -141,23 +141,12 @@ def run_game():
             play_again()
             return  
         
-        # trying to correct feedback for incorrect guesses
-        # keeps getting hung up on "Letter already guessed"
-        if len(recent) != 1:
-            print("That is too many letters")
-        elif recent in current_guesses:
-            print("Letter already guessed")
-
-        elif recent not in all_letters:
-            print("This isn't a letter")    
-            
+        if recent in final_target_word:
+            print("Good guess!")
+            # current_guesses.append(recent)
         else:
-            if recent in final_target_word:
-                print("Good guess!")
-                current_guesses.append(recent)
-            else:
-                print("Not quite")
-                bad_guesses += 1
+            print("Not quite")
+            bad_guesses += 1
         
         
         
