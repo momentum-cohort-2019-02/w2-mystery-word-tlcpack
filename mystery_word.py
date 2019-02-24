@@ -46,13 +46,13 @@ def pick_word():
     print(target_word)
     return target_word
 
-final_target_word = pick_word()
+# final_target_word = pick_word()
 # find unique letters in final word
 all_letters = "abcdefghijklmnopqrstuvwxyz"
 unique_letters_in_final = []
-for letter in final_target_word:
-    if letter in all_letters and letter not in unique_letters_in_final:
-        unique_letters_in_final.append(letter)
+# for letter in final_target_word:
+#     if letter in all_letters and letter not in unique_letters_in_final:
+#         unique_letters_in_final.append(letter)
 
 def display_letter(letter, guesses):
     """
@@ -65,10 +65,10 @@ def display_letter(letter, guesses):
         return "_"
 
 
-def print_word(word, guesses):
-    output_letters = [display_letter(letter, guesses) for letter in final_target_word]
-    print(" ".join(output_letters))
-    return
+# def print_word(word, guesses):
+#     output_letters = [display_letter(letter, guesses) for letter in final_target_word]
+#     print(" ".join(output_letters))
+#     return
 
 
 
@@ -101,9 +101,23 @@ def run_game():
     """The game"""
     # clears guesses from previous game
     del current_guesses[:]
-    print_word(final_target_word, current_guesses)
-    print(unique_letters_in_final)
-    print("# unique letter", len(unique_letters_in_final))
+    final_target_word = pick_word()
+    # display initial blanks
+    print("_ " * len(final_target_word))
+    # find unique letters in final word
+    all_letters = "abcdefghijklmnopqrstuvwxyz"
+    unique_letters_in_final = []
+    for letter in final_target_word:
+        if letter in all_letters and letter not in unique_letters_in_final:
+            unique_letters_in_final.append(letter)
+    
+    # displays blanks with guessed letters once game begins
+    def print_word(word, guesses):
+        output_letters = [display_letter(letter, guesses) for letter in final_target_word]
+        print(" ".join(output_letters))
+        return
+    print(unique_letters_in_final) # for testing
+    # print("# unique letter", len(unique_letters_in_final)) # for testing
     bad_guesses = 0
     winner_check = []
     # can also use for loop to compare guessed letters to word letters
@@ -113,7 +127,7 @@ def run_game():
         #showing turn
         print("Turn: ", bad_guesses + 1)
         
-        #showing current guesses
+        #showing current guesses for testing
         print(''.join(current_guesses))
         print(winner_check)
 
@@ -135,9 +149,18 @@ def run_game():
             return  
         if recent in final_target_word:
             print("Good guess!")
+        #keeps getting hung up on "Letter already guessed"
         else:
-            print("Not quite")
-            bad_guesses += 1
+            if len(recent) != 1:
+                print("That is too many letters")
+            elif recent in current_guesses:
+                print("Letter already guessed")
+
+            elif recent not in all_letters:
+                print("This isn't a letter")
+            else: 
+                print("Not quite")
+                bad_guesses += 1
         
         
         

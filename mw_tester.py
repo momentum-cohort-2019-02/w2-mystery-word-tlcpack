@@ -66,28 +66,28 @@ def letter_guess():
     """Asks user for letter, validates guess, returns if valid"""
     new_guess = input("Enter your guess (one letter): ")
    
-    ### something is still off here ###
-    # check if guess is a letter?
+    
+    # check if guess is a letter
     all_letters = "abcdefghijklmnopqrstuvwxyz"
     all_letters += all_letters.upper()
 
     # checking if entry is valid already guessed
     
-    
-    if new_guess in current_guesses:
-        print("Letter already guessed")
-        letter_guess()
-    elif len(new_guess) > 1:
-        print("That is too many letters")
-        letter_guess()
-    elif new_guess not in all_letters:
-        print("This isn't a letter")    
-        letter_guess()
-    else:
-        current_guesses.append(new_guess)
+    # while True:
+    #     if new_guess in current_guesses:
+    #         print("Letter already guessed")
+    #         letter_guess()
+    #     elif len(new_guess) > 1:
+    #         print("That is too many letters")
+    #         letter_guess()
+    #     elif new_guess not in all_letters:
+    #         print("This isn't a letter")    
+    #         letter_guess()
+    #     else:
+    #         current_guesses.append(new_guess)
     return new_guess
 
-# final_target_word = '' # causes loss of blanks, word needs to be defined before print_word function
+
 
 def run_game():
 
@@ -120,7 +120,7 @@ def run_game():
         #showing turn
         print("Turn: ", bad_guesses + 1)
         
-        #showing current guesses
+        #showing current guesses # for testing
         print(''.join(current_guesses))
         print(winner_check)
 
@@ -137,14 +137,27 @@ def run_game():
                 winner_check.append(letter)
         # comparing len of unique letter lists between word and good guesses
         if len(unique_letters_in_final) == len(winner_check):
-                print("You win!")
-                play_again()
-                return  
-        if recent in final_target_word:
-            print("Good guess!")
+            print("You win!")
+            play_again()
+            return  
+        
+        # trying to correct feedback for incorrect guesses
+        # keeps getting hung up on "Letter already guessed"
+        if len(recent) != 1:
+            print("That is too many letters")
+        elif recent in current_guesses:
+            print("Letter already guessed")
+
+        elif recent not in all_letters:
+            print("This isn't a letter")    
+            
         else:
-            print("Not quite")
-            bad_guesses += 1
+            if recent in final_target_word:
+                print("Good guess!")
+                current_guesses.append(recent)
+            else:
+                print("Not quite")
+                bad_guesses += 1
         
         
         
