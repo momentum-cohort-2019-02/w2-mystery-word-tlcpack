@@ -43,7 +43,7 @@ def pick_word():
     # pick random word for game
     target_word = random.choice(words)
     print("The word is ", len(target_word), "letters long.")
-    print(target_word)
+    # print(target_word) # for testing
     return target_word
 
 # final_target_word = pick_word()
@@ -85,13 +85,13 @@ def letter_guess():
         new_guess = input("Enter your guess (one letter): ")
         new_guess = new_guess.lower()
         if new_guess in current_guesses:
-            print("Letter already guessed")
+            print("\nLetter already guessed\n")
             
         elif len(new_guess) != 1:
-            print("I need one letter")
+            print("\nI need one letter\n")
             
         elif new_guess not in all_letters:
-            print("This isn't a letter")    
+            print("\nThis isn't a letter\n")    
             
         else:
             current_guesses.append(new_guess)
@@ -117,7 +117,7 @@ def run_game():
         output_letters = [display_letter(letter, guesses) for letter in final_target_word]
         print(" ".join(output_letters))
         return
-    print(unique_letters_in_final) # for testing
+    # print(unique_letters_in_final) # for testing
     # print("# unique letter", len(unique_letters_in_final)) # for testing
     bad_guesses = 0
     winner_check = []
@@ -129,8 +129,8 @@ def run_game():
         print("Turn: ", bad_guesses + 1)
         
         #showing current guesses # for testing
-        print(''.join(current_guesses))
-        print(winner_check)
+        # print(''.join(current_guesses))
+        # print(winner_check) 
 
         #running guess letter fxn
         recent = letter_guess()
@@ -145,19 +145,19 @@ def run_game():
                 winner_check.append(letter)
         # comparing len of unique letter lists between word and good guesses
         if len(unique_letters_in_final) == len(winner_check):
-            print("You win!")
+            print("\nYou win!\n")
             play_again()
             return  
         
         if recent in final_target_word:
-            print("Good guess!")
-            # current_guesses.append(recent)
+            print("\nGood guess!\n")
+    
         else:
-            print("Not quite")
+            print("\nNot quite\n")
             bad_guesses += 1
         
         #ending game with too many guesses
-        if bad_guesses == 5:
+        if bad_guesses == 8:
             print(f"Game Over. The word is {final_target_word}.")
             play_again()
             break
