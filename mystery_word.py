@@ -1,7 +1,7 @@
 # importing random library
 import random
 
-
+current_guesses = []
 
 def pick_word():
     """Asking user for difficulty, creating word list based on response"""
@@ -91,20 +91,21 @@ def letter_guess():
         print("That is too many letters")
     
     elif new_guess not in all_letters:
-            print("This isn't a letter")    
+        print("This isn't a letter")    
     
     else:
         current_guesses.append(new_guess)
     return new_guess
 
 def run_game():
-    
+    """The game"""
+    # clears guesses from previous game
+    del current_guesses[:]
     print_word(final_target_word, current_guesses)
     print(unique_letters_in_final)
     print("# unique letter", len(unique_letters_in_final))
     bad_guesses = 0
     winner_check = []
-    current_guesses = []
     # can also use for loop to compare guessed letters to word letters
     # for guess in current_guesses:
     while True:

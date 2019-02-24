@@ -45,7 +45,7 @@ def pick_word():
     print(target_word) # for testing
     return target_word
 
-
+# final_target_word = pick_word()
 
 def display_letter(letter, guesses):
     """
@@ -58,10 +58,7 @@ def display_letter(letter, guesses):
         return "_"
 
 
-def print_word(word, guesses):
-    output_letters = [display_letter(letter, guesses) for letter in final_target_word]
-    print(" ".join(output_letters))
-    return
+
 
 
 
@@ -90,20 +87,27 @@ def letter_guess():
         current_guesses.append(new_guess)
     return new_guess
 
-final_target_word = ''
+# final_target_word = '' # causes loss of blanks, word needs to be defined before print_word function
 
 def run_game():
 
     # clears guesses from previous game
     del current_guesses[:]
     final_target_word = pick_word()
+    # display initial blanks
+    print("_ " * len(final_target_word))
     # find unique letters in final word
     all_letters = "abcdefghijklmnopqrstuvwxyz"
     unique_letters_in_final = []
     for letter in final_target_word:
         if letter in all_letters and letter not in unique_letters_in_final:
             unique_letters_in_final.append(letter)
-    print_word(final_target_word, current_guesses)
+    
+    # displays blanks with guessed letters once game begins
+    def print_word(word, guesses):
+        output_letters = [display_letter(letter, guesses) for letter in final_target_word]
+        print(" ".join(output_letters))
+        return
     print(unique_letters_in_final) # for testing
     # print("# unique letter", len(unique_letters_in_final)) # for testing
     bad_guesses = 0
@@ -155,7 +159,6 @@ def play_again():
     """Asks user if they would like to replay game"""
     response = input("Play again? (Y/N): ")
     if response == "Y" or response == "y":
-        current_guesses = []
         run_game()
     else:
         print("OK Goodbye! Thanks for playing!")
