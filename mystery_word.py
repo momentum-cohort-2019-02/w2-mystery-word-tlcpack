@@ -81,18 +81,18 @@ def letter_guess():
     all_letters = "abcdefghijklmnopqrstuvwxyz"
     all_letters += all_letters.upper()
 
-    # checking if letter already guessed
-    for letter in all_letters:
-        if new_guess not in all_letters:
-            print("This isn't a letter")
-            break
+    # checking if entry is valid already guessed
+    
     
     if new_guess in current_guesses:
         print("Letter already guessed")
-        break
+        
     elif len(new_guess) > 1:
         print("That is too many letters")
-        break
+    
+    elif new_guess not in all_letters:
+            print("This isn't a letter")    
+    
     else:
         current_guesses.append(new_guess)
     return new_guess
@@ -129,9 +129,9 @@ def run_game():
                 winner_check.append(letter)
         # comparing len of unique letter lists between word and good guesses
         if len(unique_letters_in_final) == len(winner_check):
-                print("You win!")
-                play_again()
-                return  
+            print("You win!")
+            play_again()
+            return  
         if recent in final_target_word:
             print("Good guess!")
         else:

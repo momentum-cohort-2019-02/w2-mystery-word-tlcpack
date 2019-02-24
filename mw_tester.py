@@ -1,7 +1,7 @@
 import random
 
 
-
+current_guesses = []
 def pick_word():
     """Asking user for difficulty, creating word list based on response"""
     # open file
@@ -42,16 +42,10 @@ def pick_word():
     # pick random word for game
     target_word = random.choice(words)
     print("The word is ", len(target_word), "letters long.")
-    print(target_word)
+    print(target_word) # for testing
     return target_word
 
-final_target_word = pick_word()
-# find unique letters in final word
-all_letters = "abcdefghijklmnopqrstuvwxyz"
-unique_letters_in_final = []
-for letter in final_target_word:
-    if letter in all_letters and letter not in unique_letters_in_final:
-        unique_letters_in_final.append(letter)
+
 
 def display_letter(letter, guesses):
     """
@@ -80,30 +74,41 @@ def letter_guess():
     all_letters = "abcdefghijklmnopqrstuvwxyz"
     all_letters += all_letters.upper()
 
-    # checking if letter already guessed
-    for letter in all_letters:
-        if new_guess not in all_letters:
-            print("This isn't a letter")
-            break
+    # checking if entry is valid already guessed
+    
     
     if new_guess in current_guesses:
         print("Letter already guessed")
-        break
+        letter_guess()
     elif len(new_guess) > 1:
         print("That is too many letters")
-        break
+        letter_guess()
+    elif new_guess not in all_letters:
+        print("This isn't a letter")    
+        letter_guess()
     else:
         current_guesses.append(new_guess)
     return new_guess
 
+final_target_word = ''
+
 def run_game():
-    
+
+    # clears guesses from previous game
+    del current_guesses[:]
+    final_target_word = pick_word()
+    # find unique letters in final word
+    all_letters = "abcdefghijklmnopqrstuvwxyz"
+    unique_letters_in_final = []
+    for letter in final_target_word:
+        if letter in all_letters and letter not in unique_letters_in_final:
+            unique_letters_in_final.append(letter)
     print_word(final_target_word, current_guesses)
-    print(unique_letters_in_final)
-    print("# unique letter", len(unique_letters_in_final))
+    print(unique_letters_in_final) # for testing
+    # print("# unique letter", len(unique_letters_in_final)) # for testing
     bad_guesses = 0
     winner_check = []
-    current_guesses = []
+    
     # can also use for loop to compare guessed letters to word letters
     # for guess in current_guesses:
     while True:
@@ -150,6 +155,7 @@ def play_again():
     """Asks user if they would like to replay game"""
     response = input("Play again? (Y/N): ")
     if response == "Y" or response == "y":
+        current_guesses = []
         run_game()
     else:
         print("OK Goodbye! Thanks for playing!")
