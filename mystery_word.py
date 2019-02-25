@@ -26,7 +26,7 @@ def pick_word():
 
     # picking letter choice loop
     while pick:
-        difficulty = input("Enter your game difficult (easy, normal, hard): ")
+        difficulty = input("WELCOME TO MYSTERY WORD!!\nEnter your game difficult (easy, normal, hard): ")
         difficulty = difficulty.lower()
         if difficulty == "easy":
             for word in text.split(" "):
@@ -53,7 +53,7 @@ def pick_word():
     target_word = random.choice(words)
     print("The word is ", len(target_word), "letters long.")
     
-    # print(target_word) # for testing
+    print(target_word) # for testing
     return target_word
 
 # final_target_word = pick_word()
@@ -146,8 +146,8 @@ def run_game():
         #showing turn
         print("Turn: ", bad_guesses + 1)
         
-        #showing current guesses # for testing
-        # print(''.join(current_guesses))
+        # showing current guesses # for testing
+        print("Your current guesses: ", ''.join(current_guesses))
         # print(winner_check) 
 
         #running guess letter fxn
