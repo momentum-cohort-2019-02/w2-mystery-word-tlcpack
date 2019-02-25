@@ -7,7 +7,7 @@ def pick_word():
     """Asking user for difficulty, creating word list based on response"""
     # open file
     # choose difficulty
-    difficulty = input("Enter your game difficult (easy, normal, hard): ")
+    
     with open("words.txt") as file:
         text = file.read()
         file.close
@@ -18,27 +18,34 @@ def pick_word():
 
     # replace new lines with spaces
     text = text.replace("\n", " ")
-    difficulty = difficulty.lower()
+   
 
     # put words in list, may need to use \n instead of .split(), pulling words of correct length
     words = []
-    if difficulty == "easy":
-        for word in text.split(" "):
-            if len(word) > 3 and len(word) < 7:
-                words.append(word)
-    elif difficulty == "normal":
-        for word in text.split(" "):
-            if len(word) > 5 and len(word) < 9:
-                words.append(word)
-    elif difficulty == "hard":
-        for word in text.split(" "):
-            if len(word) > 7 :
-                words.append(word)
-    
-    # make response for invalid response
-    else: 
-        print("Invalid response")
-        pick_word()
+    pick = True
+    while pick:
+        difficulty = input("Enter your game difficult (easy, normal, hard): ")
+        difficulty = difficulty.lower()
+        if difficulty == "easy":
+            for word in text.split(" "):
+                if len(word) > 3 and len(word) < 7:
+                    words.append(word)
+            pick = False
+        elif difficulty == "normal":
+            for word in text.split(" "):
+                if len(word) > 5 and len(word) < 9:
+                    words.append(word)
+            pick = False
+        elif difficulty == "hard":
+            for word in text.split(" "):
+                if len(word) > 7 :
+                    words.append(word)
+            pick = False
+        
+        # make response for invalid response
+        else: 
+            print("Invalid response")
+            
     
     # pick random word for game
     target_word = random.choice(words)
