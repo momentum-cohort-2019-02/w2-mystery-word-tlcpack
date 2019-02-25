@@ -23,6 +23,8 @@ def pick_word():
     # put words in list, may need to use \n instead of .split(), pulling words of correct length
     words = []
     pick = True
+
+    # picking letter choice loop
     while pick:
         difficulty = input("Enter your game difficult (easy, normal, hard): ")
         difficulty = difficulty.lower()
@@ -50,16 +52,20 @@ def pick_word():
     # pick random word for game
     target_word = random.choice(words)
     print("The word is ", len(target_word), "letters long.")
+    
     # print(target_word) # for testing
     return target_word
 
 # final_target_word = pick_word()
 # find unique letters in final word
-all_letters = "abcdefghijklmnopqrstuvwxyz"
-unique_letters_in_final = []
+
 # for letter in final_target_word:
 #     if letter in all_letters and letter not in unique_letters_in_final:
 #         unique_letters_in_final.append(letter)
+
+# this was needed earlier, no longer
+# all_letters = "abcdefghijklmnopqrstuvwxyz"
+# unique_letters_in_final = []
 
 def display_letter(letter, guesses):
     """
@@ -107,11 +113,14 @@ def letter_guess():
 
 def run_game():
     """The game"""
+    
     # clears guesses from previous game
     del current_guesses[:]
     final_target_word = pick_word()
+    
     # display initial blanks
     print("_ " * len(final_target_word))
+    
     # find unique letters in final word
     all_letters = "abcdefghijklmnopqrstuvwxyz"
     unique_letters_in_final = []
@@ -124,10 +133,12 @@ def run_game():
         output_letters = [display_letter(letter, guesses) for letter in final_target_word]
         print(" ".join(output_letters))
         return
+
     # print(unique_letters_in_final) # for testing
     # print("# unique letter", len(unique_letters_in_final)) # for testing
     bad_guesses = 0
     winner_check = []
+
     # can also use for loop to compare guessed letters to word letters
     # for guess in current_guesses:
     while True:
