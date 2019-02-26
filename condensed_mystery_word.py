@@ -30,11 +30,12 @@ def determine_word_list(difficulty):
 
     return words_list
 
-def get_final_target_word(list, difficulty):
+def get_final_target_word():
     """Picking word from list for user to guess"""
     filtered_list = determine_word_list(select_difficulty())
     target_word = random.choice(filtered_list)
     print("The word is ", len(target_word), "letters long.")
+    return target_word
 
 def is_letter_input_valid(user_input):
     """Is input 1 character long, a letter, and not previously guessed"""
@@ -68,9 +69,9 @@ def play_again():
         print("OK Goodbye! Thanks for playing!")
         return
 
-current_display = showing_guessed_letters(target_word, current_guesses)
-print(current_display)
+current_guesses = []
+def print_opening_display():
+    current_display = showing_guessed_letters(get_final_target_word(), current_guesses)
+    print(current_display)
 
-def run_game():
-    
-    current_guesses = []
+print_opening_display()
