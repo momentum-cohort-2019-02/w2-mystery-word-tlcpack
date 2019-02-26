@@ -9,17 +9,17 @@ def test_is_letter():
     assert not is_letter('ls')
     assert is_letter('e')
 
-# def test_correct_length():
-#     assert correct_length('d')
-#     assert correct_length('F')
-#     assert not correct_length('df')
-#     assert not correct_length('KL')
-#     assert not correct_length('')
+def test_correct_length():
+    assert correct_length('d')
+    assert correct_length('F')
+    assert not correct_length('df')
+    assert not correct_length('KL')
+    assert not correct_length('')
 
-# def test_in_current_guesses():
-#     assert in_current_guesses('a')
-#     assert in_current_guesses('b')
-#     assert not in_current_guesses('n')
-#     assert not in_current_guesses('9')
-#     assert in_current_guesses('C')
-#     assert not in_current_guesses('V')
+def test_in_current_guesses():
+    assert in_current_guesses('a')
+    assert in_current_guesses('b')
+    assert not in_current_guesses('n')
+    assert not in_current_guesses('9')
+    assert in_current_guesses('C')
+    assert not in_current_guesses('V')

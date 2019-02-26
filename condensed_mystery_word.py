@@ -2,7 +2,7 @@ import random
 
 def select_difficulty():
     """Asking user to select difficulty of game"""
-    difficulty = None
+    difficulty = ''
     while difficulty.lower() not in ['easy', 'normal', 'hard']:
         difficulty = input("WELCOME TO MYSTERY WORD!!\nEnter your game difficult (easy, normal, hard): ")
     return difficulty
@@ -30,20 +30,11 @@ def determine_word_list(difficulty):
 
     return words_list
 
-filtered_list = determine_word_list(select_difficulty())
-target_word = random.choice(filtered_list)
-print("The word is ", len(target_word), "letters long.")
-current_guesses = []
-
-def display_letter(letter, guesses):
-    """
-    Conditionally display a letter. If the letter is already in
-    the list `guesses`, then return it. Otherwise, return "_".
-    """
-    if letter in guesses:
-        return letter.upper()
-    else:
-        return "_"
+def get_final_target_word(list, difficulty):
+    """Picking word from list for user to guess"""
+    filtered_list = determine_word_list(select_difficulty())
+    target_word = random.choice(filtered_list)
+    print("The word is ", len(target_word), "letters long.")
 
 def is_letter_input_valid(user_input):
     """Is input 1 character long, a letter, and not previously guessed"""
@@ -58,3 +49,28 @@ def get_letter_input():
     return new_guess
 
 
+def showing_guessed_letters(word, display_letters):
+    """Display blanks and guessed letters of target word"""
+    show_letters = []
+    for letter in word.casefold():
+        if letter in display_letters:
+            show_letters.append(letter.upper())
+        else:
+            show_letters.append("_")
+    return " ".join(show_letters)
+
+def play_again():
+    """Asks user if they would like to replay game"""
+    response = input("Play again? (Y/N): ")
+    if response.lower() == "y" or response == "yes":
+        run_game()
+    else:
+        print("OK Goodbye! Thanks for playing!")
+        return
+
+current_display = showing_guessed_letters(target_word, current_guesses)
+print(current_display)
+
+def run_game():
+    
+    current_guesses = []
